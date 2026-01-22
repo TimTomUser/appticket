@@ -1,0 +1,182 @@
+<div class="container my-5 px-5">
+    <div class="bandeau">
+        <div class="bg-body-tertiary">
+            <h2 class="pt-4 pb-2 text-center">Contact nos <i><strong>Storm</strong>Technicien</i></h2>
+            <form id="monFormulaire" [formGroup]="formulaire" (ngSubmit)="postFormData()">
+                <!-- <form id="monFormulaire" [formGroup]="formulaire" (ngSubmit)="soumettre()"> -->
+                <div class="row mb-4">
+                    <div class="col mb-3">
+                        <label class="form-label">Nom</label>
+                        <input type="Nom" class="form-control" formControlName="nom" id="nom" placeholder="Votre nom"
+                            [class.is-invalid]="formulaire.get('nom')?.invalid && formulaire.get('nom')?.touched"
+                            id="nom" placeholder="Votre nom" required>
+                        @if(formulaire.get('nom')?.hasError('required') && formulaire.get('nom')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre nom</div>
+                        }
+                        @if(formulaire.get('nom')?.hasError('minlength') && formulaire.get('nom')?.touched) {
+                        <div class="text-danger small mt-1">Nom trop court</div>
+                        }
+                    </div>
+
+                    <!-- NOM ci dessus-->
+                    <div class="col mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" formControlName="email" id="email"
+                            placeholder="Votre email"
+                            [class.is-invalid]="formulaire.get('email')?.invalid && formulaire.get('email')?.touched"
+                            id="email" placeholder="Votre email" required>
+                        @if(formulaire.get('email')?.hasError('required') && formulaire.get('email')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre email</div>
+                        }
+                        @if(formulaire.get('email')?.hasError('email') && formulaire.get('email')?.touched) {
+                        <div class="text-danger small mt-1">Format invalide</div>
+                        }
+
+                    </div>
+                    <!-- EMAIL ci dessus-->
+                </div>
+                <div class="row mb-4">
+                    <div class="col mb-3">
+                        <label class="form-label">Sujet</label>
+                        <textarea class="form-control" id="text" rows="3" formControlName="sujet"
+                            [class.is-invalid]="formulaire.get('sujet')?.invalid && formulaire.get('sujet')?.touched"
+                            id="sujet" placeholder="Votre sujet" required>
+                </textarea>
+                        @if(formulaire.get('sujet')?.hasError('required') && formulaire.get('sujet')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre sujet</div>
+                        }
+
+                    </div>
+                </div>
+                <!-- SUJET ci dessus-->
+
+                <div class="row mb-4">
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Veuillez choisir une région</label>
+                        <select id="region" class="form-control" formControlName="region"
+                            [class.is-invalid]="formulaire.get('region')?.invalid && formulaire.get('region')?.touched"
+                            required>
+                            <option value="">"CHOIX REGION"</option>
+                            <!-- <option value=""></option> -->
+                            <!-- <script>
+                                document.getElementById('region').addEventListener('change', function (event) {
+                                    // var codeRegion = document.getElementById('region').value;
+                                    fetch("https://geo.api.gouv.fr/region/").then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    }).then(data => {
+                                        for (var i = 0; i < data.length; i++) {
+                                            document.getElementById('region').innerHTML += "<option value='" + data[i].nom + "'>" + data[i].nom + "</option>";
+                                        }
+
+                                    }).catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                });
+                            </script> -->
+                        </select>
+
+                        @if(formulaire.get('region')?.hasError('required') && formulaire.get('region')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre région</div>
+                        }
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Veuillez choisir un département</label>
+                        <select id="departement" class="form-control" formControlName="departement"
+                            [class.is-invalid]="formulaire.get('departement')?.invalid && formulaire.get('departement')?.touched"
+                            required>
+                            <option value="">"CHOIX DEPARTEMENT"</option>
+                            <script type="module">
+                                document.getElementById('region').addEventListener('change', function (event) {
+                                    var codeRegion = document.getElementById('region').value;
+                                    fetch("https://geo.api.gouv.fr/regions/" + codeRegion + "/departements").then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    }).then(data => {
+                                        for (var i = 0; i < data.length; i++) {
+                                            document.getElementById('departement').innerHTML += "<option value='" + data[i].nom + "'>" + data[i].nom + "</option>";
+                                        }
+
+                                    }).catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                });</script>
+
+                        </select>
+                        @if(formulaire.get('departement')?.hasError('required') &&
+                        formulaire.get('departement')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre département</div>
+                        }
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Veuillez choisir une commune</label>
+                        <select id="commune" class="form-control" formControlName="commune"
+                            [class.is-invalid]="formulaire.get('commune')?.invalid && formulaire.get('commune')?.touched"
+                            required>
+                            <option value="">"CHOIX COMMUNE"</option>
+                            <script>
+                                document.getElementById('departement').addEventListener('change', function (event) {
+                                    var codeDepartement = document.getElementById('departement').value;
+                                    fetch("https://geo.api.gouv.fr/departements/" + codeDepartement + "/communes").then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    }).then(data => {
+                                        for (var i = 0; i < data.length; i++) {
+                                            document.getElementById('commune').innerHTML += "<option value='" + data[i].nom + "'>" + data[i].nom + "</option>";
+                                        }
+
+                                    }).catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                });</script>
+                        </select>
+                        @if(formulaire.get('commune')?.hasError('required') && formulaire.get('commune')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre commune</div>
+                        }
+                    </div>
+                </div>
+
+
+
+                <div class="row mb-4">
+                    <div class="col mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" id="text" rows="3" formControlName="message"
+                            [class.is-invalid]="formulaire.get('message')?.invalid && formulaire.get('message')?.touched"
+                            id="message" placeholder="Votre message" required>
+                </textarea>
+                        @if(formulaire.get('message')?.hasError('required') && formulaire.get('message')?.touched) {
+                        <div class="text-danger small mt-1">Veuillez renseigner votre message</div>
+                        }
+                        @if(formulaire.get('message')?.hasError('minlength') && formulaire.get('message')?.touched)
+                        {
+                        <div class="text-danger small mt-1">Message trop court</div>
+                        }
+                        <button class="btn btn-primary my-3 w-100 mb-5" [disabled]="formulaire.invalid">Envoyer le
+                            message</button>
+                    </div>
+                </div>
+                <!-- MESSAGE ci dessus-->
+
+            </form>
+        </div>
+    </div>
+</div>
+<div class="alert alert-success d-none" role="alert" id="confirmation">
+    Nous avons bien reçu votre message. Il sera traité dans le plus brefs délais.
+</div>
+<div class="alert alert-danger d-none" role="alert" id="erreur">
+    Votre message c'est perdu en routes, MERRRRRDDDDE, applez vite un dev!
+</div>

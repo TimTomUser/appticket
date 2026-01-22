@@ -1,0 +1,44 @@
+<table class="table table-info table-striped-columns">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Sujet</th>
+            <th scope="col">Region</th>
+            <th scope="col">Departement</th>
+            <th scope="col">Commune</th>
+            <th scope="col">Message</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for(table of monAppDemande; track table) {
+        <tr>
+            <th scope="row">{{table.id}}</th>
+            <th scope="col">{{table.nom}}</th>
+            <th scope="col">{{table.email}}</th>
+            <th scope="col">{{table.sujet}}</th>
+            <th scope="col">{{table.region}}</th>
+            <th scope="col">{{table.departement}}</th>
+            <th scope="col">{{table.commune}}</th>
+            <th scope="col">{{table.message}}</th>
+
+        </tr>
+
+        <!-- } @empty {
+        <tr>
+            <th scope="row">#</th>
+            <th scope="col">Note Found</th>
+            <th scope="col">Note Found</th>
+            <th scope="col">Note Found</th>
+            <th scope="col">Note Found</th>
+            <th scope="col">Note Found</th>
+            <th scope="col">Note Found</th>
+            <th scope="col">Note Found</th>
+
+        </tr> -->
+        }
+    </tbody>
+
+</table>
